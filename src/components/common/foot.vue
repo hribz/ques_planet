@@ -9,7 +9,7 @@
       tile
     >
       <v-card-title class="teal">
-        <strong class="subheading">Connected with me on social networks to get more story about me and my lover!</strong>
+        <strong class="subheading"></strong>
 
         <v-spacer></v-spacer>
 
@@ -27,7 +27,7 @@
       </v-card-title>
 
       <v-card-text class="py-2 white--text text-center">
-        {{ new Date().getFullYear() }} — <strong>xyixk</strong>
+        {{ new Date().getFullYear() }} — <strong></strong>
       </v-card-text>
     </v-card>
   </v-footer>
