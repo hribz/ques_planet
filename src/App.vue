@@ -11,7 +11,7 @@
 <script>
 
 import Nav from './components/common/Nav.vue';
-import Foot from './components/common/foot.vue';
+import Foot from './components/common/Foot.vue';
 
 export default {
   name: 'App',
