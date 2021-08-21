@@ -2,8 +2,8 @@
   <div>
     <v-container id="login">
       <v-stepper v-model="e1">
-        <v-stepper-header style="justify-content:center">
-              <v-card-title style="font-weight: 550">登&nbsp&nbsp录</v-card-title>
+        <v-stepper-header style="justify-content: center">
+          <v-card-title style="font-weight: 550">登&nbsp&nbsp录</v-card-title>
         </v-stepper-header>
         <v-stepper-items>
           <v-stepper-content step="1">
@@ -31,21 +31,22 @@
               </v-form>
             </v-card>
 
-            <v-row style="margin-top: 5px" >
-              <v-col
-                align="left"
-                style="font-size: 15px"
+            <v-row style="margin-top: 5px">
+              <v-col align="left" style="font-size: 15px"
                 ><a @click="$router.push('/password')">忘记密码?</a></v-col
               >
               <v-spacer></v-spacer>
-              <v-col
-                align="right"
-                style="font-size: 15px"
+              <v-col align="right" style="font-size: 15px"
                 ><a @click="$router.push('/register')">注册账号</a></v-col
               >
             </v-row>
 
-            <v-btn color="primary" @click="login" style="margin-top: 5px"> <span style="font-size:15px">登录</span> </v-btn>
+            <v-btn color="primary" @click="login" style="margin-top: 5px">
+              <span style="font-size: 15px">登录</span>
+            </v-btn>
+            <v-alert dense text type="error" v-if="!success" style="margin-top:10px">
+              {{returnMsg}}
+            </v-alert>
           </v-stepper-content>
         </v-stepper-items>
       </v-stepper>
@@ -59,6 +60,8 @@ export default {
     return {
       valid: true,
       show: false,
+      success: true,
+      returnMsg:"",
       loginForm: {
         email: "",
         password: "",
@@ -69,7 +72,9 @@ export default {
       ],
       passwordRules: [
         (v) => !!v || "请填写密码！",
-        (v) => /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z\\W]{6,18}$/.test(v) || "请检查密码格式是否正确",
+        (v) =>
+          /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z\\W]{6,18}$/.test(v) ||
+          "请检查密码格式是否正确",
       ],
       select: null,
       e1: 1,
@@ -83,9 +88,16 @@ export default {
       if (!this.$refs.form.validate()) {
         return;
       }
-      this.$axios
-        .post("/user/login", this.loginForm)
-        .then((response) => {})
+      this.$axios.post('user/login',this.loginForm)
+        .then((response) => {
+          let code = response.data.code;
+          if (code == 200) {
+            this.$store.commit("USER_LOGIN", response.data.user_info);
+          }else {
+            this.returnMsg=response.data.message
+            this.success=false
+          }
+        })
         .catch((err) => {});
     },
   },

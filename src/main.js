@@ -15,7 +15,6 @@ Vue.use(ElementUI);
 Vue.config.productionTip = false
 
 Axios.defaults.baseURL = baseUrl
-Axios.defaults.withCredentials = true
 Vue.prototype.$axios = Axios
 
 new Vue({
